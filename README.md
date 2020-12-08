@@ -1,6 +1,6 @@
-# unified-authorization
+# unified-authorization-document
 
-易班统一授权服务
+易班统一授权服务说明文档
 
 本服务适用于同时符合以下两个要求的项目：
 1. 前后端分离的项目，前后端分开部署。
