@@ -37,11 +37,9 @@
 
 详见：[易班开放平台wiki文档授权机制说明](https://o.yiban.cn/wiki/index.php?page=%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E)
 
-### [易班接口限制与凭证说明](#易班接口限制与凭证说明)
+每个应用获得同一用户的授权凭证独立，每个应用的接口调用数据相互独立，因此不同项目应分开在易班开放平台创建接入和进行审核
 
 详见：[易班开放平台wiki文档权限说明](https://o.yiban.cn/wiki/index.php?page=%E6%9D%83%E9%99%90%E8%AF%B4%E6%98%8E)
-
-每个应用获得同一用户的授权凭证独立，每个应用的接口调用数据相互独立，因此不同项目应分开在易班开放平台创建接入和进行审核
 
 ### [本服务处理的问题](#本服务处理的问题)
 
@@ -58,7 +56,7 @@
 
 ### [使用方法与API](#使用方法与API)
 
-在使用本服务之前你需要了解一下以下相关内容：
+在使用本服务之前你需要了解一下以下服务定义好的内容：
 
 **identification**：用户登陆后获得的**标识码**，存储在浏览器的 localStorage 中
 
@@ -66,7 +64,7 @@
 
 **密钥 $**：使用 SHA-256 加密随机值 v 获得的加密值，用于匹配用户随机值 v，检测请求可信性
 
-[具体使用方法请参考仓库 unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
+[服务API与使用方法请参考仓库 unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
 
 ### [登陆状态校验节点](#登陆状态校验节点)
 
@@ -128,7 +126,7 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 如果SPA页面发现应用后端服务不可用的情况下，希望了解到应用处于什么状态时，可调用[应用状态获取接口](https://github.com/csxyyiban/unified-authorization-service#%E5%BA%94%E7%94%A8API%E6%8E%A5%E5%8F%A3)来获取相关信息。
 
-### 授权流程
+### [授权流程](#授权流程)
 
 在授权过程中，如何将用户标识码安全可靠的给前端，是一个重点，在这里我们采用 PKCE Flow 来完成这一操作。
 
@@ -140,8 +138,8 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 但此时，应用换取 identification 时，并不是传入 $ 作为请求参数，而是一开始生成的 v，中间服务接收到 v 时，会进行同样算法的加密，获得另一个密钥，此时匹配 Redis 中对应的密钥 $ 即可获得 identification。
 
-因此，当忽略前面考虑的因素，在理想状态下，应用进行授权和获取用户令牌的流程如下图：
-1. 应用生成随机值 v 和 $，存储 v 到浏览器
+因此，当忽略前面考虑的因素，在理想状态下，应用进行授权和获取用户令牌的应用与服务双方流程如下：
+1. 应用生成随机值 v 和 $，存储 v 到浏览器 localStorage
 2. 携带 $ 和 appId 重定向至中间授权
 3. 中间授权重定向至易班开放平台
 4. 用户进行登陆授权
@@ -149,12 +147,12 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 6. 中间授权存储 access_token 和 identification，重定向至应用
 7. 应用携带 v 发送 POST 请求
 8. 中间授权对 v 进行加密匹配 identification
-9. 应用存储 identification
+9. 应用存储 identification 到 localStorage，删除浏览器中的 v
 
 当应用需要使用 access_token 进行业务操作时：
 1. 应用前端将 identification 传入后端
-2. 应用后端发送 identification 和 app_secret 换取 access_token
-3. 应用通过 access_token 完成业务
+2. 应用后端发送 identification 和 AppSecret 换取 access_token
+3. 应用使用 access_token 调用易班 API 完成业务
 
 ![授权时序图](images/授权时序图.png)
 
@@ -163,3 +161,5 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 中间授权服务：[unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
 
 unified-authorization应用授权JS包：[UAS-SPAapp-authorize-package](https://github.com/csxyyiban/UAS-SPAapp-authorize-package)
+
+城院易班默认静态页面：[default-static-page](https://github.com/csxyyiban/default-static-page)
