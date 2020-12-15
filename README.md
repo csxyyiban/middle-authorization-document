@@ -64,7 +64,7 @@
 
 **密钥 $**：使用 SHA-256 加密随机值 v 获得的加密值，用于匹配用户随机值 v，检测请求可信性
 
-[服务API与使用方法请参考仓库 unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
+[服务API与使用方法请参考仓库 middle-authorization-service](https://github.com/csxyyiban/middle-authorization-service)
 
 ### [登陆状态校验节点](#登陆状态校验节点)
 
@@ -124,7 +124,7 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 因此中间会对授权或易班回调进行额外的状态检测，重定向至对应的状态地址；上线状态重定向至应用主页，维护状态重定向至应用设置的维护地址（如果没有设置则重定向至本服务提供的维护地址），下线状态重定向至本服务提供的 404 页面。
 
-如果SPA页面发现应用后端服务不可用的情况下，希望了解到应用处于什么状态时，可调用[应用状态获取接口](https://github.com/csxyyiban/unified-authorization-service#%E5%BA%94%E7%94%A8API%E6%8E%A5%E5%8F%A3)来获取相关信息。
+如果SPA页面发现应用后端服务不可用的情况下，希望了解到应用处于什么状态时，可调用[应用状态获取接口](https://github.com/csxyyiban/middle-authorization-service#%E5%BA%94%E7%94%A8API%E6%8E%A5%E5%8F%A3)来获取相关信息。
 
 ### [授权流程](#授权流程)
 
@@ -163,8 +163,8 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 ### 相关项目
 
-中间授权服务：[unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
+中间授权服务：[middle-authorization-service](https://github.com/csxyyiban/middle-authorization-service)
 
-unified-authorization应用授权JS包：[UAS-SPAapp-authorize-package](https://github.com/csxyyiban/UAS-SPAapp-authorize-package)
+middle-authorization应用授权JS包：[UAS-SPAapp-authorize-package](https://github.com/csxyyiban/UAS-SPAapp-authorize-package)
 
 城院易班默认静态页面：[default-static-page](https://github.com/csxyyiban/default-static-page)
