@@ -156,6 +156,11 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 ![授权时序图](images/授权时序图.png)
 
+### 未来规划
+
+- 应用错误记录、堆栈跟踪、处理
+- 用户活跃数据统计
+
 ### 相关项目
 
 中间授权服务：[unified-authorization-service](https://github.com/csxyyiban/unified-authorization-service)
