@@ -114,7 +114,7 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 ### [应用登陆校验和应用状态](#应用登陆校验和应用状态)
 
-对于应用而言，需要进行的校验操作只有两个检测，即**用户标识码检测**和**浏览器随机值检测**。如果你使用的是 Vue-CLI 来构建你的 SPA 应用，那么你可用使用 UA-SPAapp-authorize-package 来进行自动检测和授权登陆，以减少你编写的代码。
+对于应用而言，需要进行的校验操作只有两个检测，即**用户标识码检测**和**浏览器随机值检测**。如果你使用的是 Vue-CLI 来构建你的 SPA 应用，那么你可用使用 [middle-authorize-JS-package](https://github.com/csxyyiban/middle-authorize-JS-package) 来进行自动检测和授权登陆，以减少你编写的代码。
 
 对于不同的校验节点，都可能导致不同的校验结果，因此对于不同情况，整体的请求过程也不相同。上面用户登陆状态校验节点活动图中，4 个节点的检测结果都是对用户登陆状态进行作用，但省略了对应用状态的判断。
 
@@ -165,6 +165,6 @@ localStorage 的存储时间是永久的，这将让用户看起来永远保持�
 
 中间授权服务：[middle-authorization-service](https://github.com/csxyyiban/middle-authorization-service)
 
-middle-authorization应用授权JS包：[UAS-SPAapp-authorize-package](https://github.com/csxyyiban/UAS-SPAapp-authorize-package)
+middle-authorization应用授权JS包：[middle-authorize-JS-package](https://github.com/csxyyiban/middle-authorize-JS-package)
 
 城院易班默认静态页面：[default-static-page](https://github.com/csxyyiban/default-static-page)
