@@ -6,15 +6,15 @@
 
 ## 项目相关技术
 
-- Language：Kotlin
-- JDK Version：15
-- Framework：
+- 开发语言：Kotlin
+- JDK 版本：15
+- 后端框架：
   - Spring Boot 2.4.2
   - MyBatis
-- Databases：
+- 数据库：
   - Redis
   - MySQL 8
-- Build Tool：Gradle
+- 项目构建工具：Gradle
 
 ## 前置知识
 
@@ -36,6 +36,10 @@
 ## 使用服务前
 
 使用本服务前，你需要在东莞理工学院城市学院易班学生工作站集成中间服务的管理后端登记你的应用，如同你在易班开放平台创建你的接入应用一样，如需登记你的个人应用，请联系管理员 (korilin.dev@gmail.com)
+
+登记完成后，你需要将开发平台上的回调地址修改成中间授权服务提供的回调地址：
+- 地址：https://csxy-yiban.cn/ims/callback/{appId}
+- 其中`{appId}`更换为你的应用的 AppID
 
 ## 中间授权流程设计
 
@@ -102,23 +106,62 @@
 ## 接口 API
 
 **用户分配接口**
-- 接口地址：https://csxy-yiban.cn/m2/userDistribute
+
+- 接口地址：https://csxy-yiban.cn/ims/userDistribute
 - 请求类型：POST form-data
+- 返回值：uid 字符串
 
 **授权重定向接口**
-- 接口地址：https://csxy-yiban.cn/m2/authorize
+
+- 接口地址：https://csxy-yiban.cn/ims/authorize
 - 请求类型：GET 重定向
 
 | 参数 | 传参方式 | 是否必填 | 描述 |
-| -- | -- | :--: | :--: | -- |
+| -- | -- | :--: | -- |
 | appId | URL 参数 | 是 | 应用 AppID |
 | encryptedUid | URL 参数 | 是 | SHA-256 算法加密的 uid |
 | source | URL 参数 | 是 | 请求来源（0 线下，1 线上）|
 
+- 返回值：重定向到易班授权接口 / 错误接口
+
 **客户端 Access Token 获取接口**
-- 接口地址：https://csxy-yiban.cn/m2/requestToken
+
+- 接口地址：https://csxy-yiban.cn/ims/requestToken
 - 请求类型：POST form-data
 
 | 参数 | 传参方式 | 是否必填 | 描述 |
-| -- | -- | :--: | :--: | -- |
+| -- | -- | :--: | -- |
 | uid | form-data | 是 | 用户标识 |
+
+- 返回值：JSON 数据
+
+数据格式：
+
+```js
+{
+   status: 获取结果, // true or false
+   accessToken: 用户令牌, // 失败时为 ""
+   message: 错误消息 // 成功时为 "SUCCESS"
+}
+```
+
+**注销用户授权接口**
+
+- 接口地址：https://csxy-yiban.cn/ims/revoke
+- 请求类型：POST form-data
+
+| 参数 | 传参方式 | 是否必填 | 描述 |
+| -- | -- | :--: | -- |
+| uid | form-data | 是 | 用户标识 |
+| accessToken | form-data | 是 | 用户授权凭证 |
+
+- 返回值：JSON 数据
+
+数据格式：
+
+```js
+{
+   status: 处理结果, // true or false
+   message: 操作信息
+}
+```
