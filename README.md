@@ -1,6 +1,6 @@
 # middle-authorize-service-document
 
-东莞理工学院城市学院易班学生工作站
+东莞城市学院易班学生工作站
 
 中间授权服务说明文档
 
