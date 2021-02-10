@@ -38,7 +38,7 @@
 使用本服务前，你需要在东莞理工学院城市学院易班学生工作站集成中间服务的管理后端登记你的应用，如同你在易班开放平台创建你的接入应用一样，如需登记你的个人应用，请联系管理员 (korilin.dev@gmail.com)
 
 登记完成后，你需要将开发平台上的回调地址修改成中间授权服务提供的回调地址：
-- 地址：https://csxy-yiban.cn/ims/callback/{appId}
+- 地址：https://csxy-yiban.cn/api/ims/callback/{appId}
 - 其中`{appId}`更换为你的应用的 AppID
 
 ## 中间授权流程设计
@@ -109,13 +109,13 @@
 
 **用户分配接口**
 
-- 接口地址：https://csxy-yiban.cn/ims/userDistribute
+- 接口地址：https://csxy-yiban.cn/api/ims/userDistribute
 - 请求类型：GET
 - 返回值：uid 字符串
 
 **授权重定向接口**
 
-- 接口地址：https://csxy-yiban.cn/ims/authorize
+- 接口地址：https://csxy-yiban.cn/api/ims/authorize
 - 请求类型：GET 重定向
 
 | 参数 | 传参方式 | 是否必填 | 描述 |
@@ -128,7 +128,7 @@
 
 **客户端 Access Token 获取接口**
 
-- 接口地址：https://csxy-yiban.cn/ims/requestToken
+- 接口地址：https://csxy-yiban.cn/api/ims/requestToken
 - 请求类型：POST form-data
 
 | 参数 | 传参方式 | 是否必填 | 描述 |
@@ -149,7 +149,7 @@
 
 **注销用户授权接口**
 
-- 接口地址：https://csxy-yiban.cn/ims/revoke
+- 接口地址：https://csxy-yiban.cn/api/ims/revoke
 - 请求类型：POST form-data
 
 | 参数 | 传参方式 | 是否必填 | 描述 |
