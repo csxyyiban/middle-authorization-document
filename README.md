@@ -167,3 +167,84 @@
    message: 操作信息
 }
 ```
+
+### 授权封装包
+
+使用授权封装包可以简化你代码，让你不需要去注重上述流程，直接调用封装包提供的函数即可完成授权操作。
+
+封装包 JS 文件下载：https://github.com/csxyyiban/middle-authorize-service-document/releases
+
+由于封装包使用 cryptoJS 来完成 SHA256 加密操作，因此在使用封装包前，你需要在你的 Vue 项目中安装 cryptoJS。
+
+```PowerShell
+npm install crypto-js
+```
+
+**封装包提供以下函数**
+
+```JS
+/**
+ * 检测用户的 UID 所拥有的登录状态是否有效
+ * 如果有效则返回用户的 access_token
+ * 如果无效则返回 null
+ *
+ * @param {*} uid_name 用户UID存放在浏览器中的名字
+ */
+function checkAuthorization(uid_name)
+
+/**
+ * 进行易班用户登录授权
+ * 如果在浏览器没有检测到 UID 就请求分配一个 UID
+ * 之后再发送重定向到授权地址
+ *
+ * @param {*} appId 应用的 AppId
+ * @param {int 0 or 1} source 请求所在源，如果是本地开发发送的请求传入 0，如果是准备线上服务的请求传入 1
+ * @param {*} uid_name 用户 UID 存放在浏览器 localStorage 所在的键名
+ */
+function authorize(appId, source, uid_name)
+
+/**
+ * 取消易班用户的授权，完成用户登出
+ *
+ * @param {*} appId 应用的 AppId
+ * @param {*} accessToken 用户的 accessToken
+ * @param {*} uid_name 用户 UID
+ */
+function logout(appId, accessToken, uid_name)
+```
+
+如果希望在用户进入应用时就必须完成登录授权，那么可以这样使用。
+
+在这里要注意我们推荐使用 AppId 来作为用户 UID 存放的 Key，这样可以避免同一用户进入不同应用造成的 Key 冲突。
+
+```JS
+var uidKey = appId
+var access_token = checkAuthorization(uidKey);
+if(access_token == null) authorize(appId, 0, uidKey);
+```
+
+当然也可以根据应用的需要将检测登录状态和授权操作分开，如果在 Vue 项目中有使用 Vuex 的话，分开的操作我们建议类似下面的例子：
+
+建议在在 Vue CLI 环境变量中存放你的 AppId 和存放 UID 的 Key
+
+```JS
+// .env 文件中
+VUE_APP_APPID=your appId
+VUE_APP_UID_KEY=$VUE_APP_APPID
+
+// .env.development 文件中
+VUE_APP_SOURCE=0
+
+// .env.production 文件中
+VUE_APP_SOURCE=1
+```
+
+建议将 access_token 临时存放在 Vuex 中
+
+```JS
+var access_token = checkAuthorization(process.env.VUE_APP_UID_KEY);
+if(access_token != null) this.$store.state.access_token = access_token;
+else{
+  // 自定义的操作，例如提示用户还没有登录授权
+}
+```
